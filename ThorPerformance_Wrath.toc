@@ -1,6 +1,6 @@
 ## Interface: 30400
 ## Title: ThorPerformance 1.0.0
-## Notes: ThorPerformance displays performance information in your broker bar. TODO change
+## Notes: ThorPerformance displays performance statistics in your broker bar or on your minimap.
 ## Author: Thorinsøn
 ## SavedVariables: ThorPerformanceDB
 
