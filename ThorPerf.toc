@@ -1,6 +1,0 @@
-## Interface: 30400
-## Title: ThorPerf 3.4.0.0
-## Notes: ThorPerf displays performance information in your broker bar.
-## Author: Thorinson
-
-includes.xml

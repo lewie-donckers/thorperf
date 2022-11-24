@@ -1,0 +1,7 @@
+## Interface: 30400
+## Title: ThorPerformance 1.0.0
+## Notes: ThorPerformance displays performance information in your broker bar. TODO change
+## Author: Thorinsøn
+## SavedVariables: ThorPerformanceDB
+
+ThorPerformance.xml
