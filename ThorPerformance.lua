@@ -71,15 +71,15 @@ local function GetThresholdColor(quality, ...)
 end
 
 local function FormatLatency(value)
-	return FormatColor(GetThresholdColor(THRESHOLD_LATENCY - value, THRESHOLD_LATENCY), "%d", value) .. " " .. FormatColor(COLOR_GOLD, "ms")
+	return FormatColor(GetThresholdColor(THRESHOLD_LATENCY - value, THRESHOLD_LATENCY), "%d", value)
 end
 
 local function FormatFramerate(value)
-	return FormatColor(GetThresholdColor(value, THRESHOLD_FRAMERATE), "%.1f", value) .. " " .. FormatColor(COLOR_GOLD, "fps")
+	return FormatColor(GetThresholdColor(value, THRESHOLD_FRAMERATE), "%.1f", value)
 end
 
 local function FormatBandwidth(value)
-	return string.format("%.1f %s", value, FormatColor(COLOR_GOLD, "kBps"))
+	return string.format("%.1f", value)
 end
 
 
@@ -88,7 +88,8 @@ end
 local ThorPerformance = LibStub("AceAddon-3.0"):NewAddon(ADDON_NAME, "AceEvent-3.0", "AceConsole-3.0", "AceTimer-3.0")
 
 function ThorPerformance:UpdateBroker()
-	self.ldb.text = string.format("%s %s %s", FormatFramerate(self.framerate), FormatLatency(self.latencyHome), FormatLatency(self.latencyWorld))
+	self.ldb.text = FormatColor(COLOR_GOLD, "%s fps %s ms %s ms",
+        FormatFramerate(self.framerate), FormatLatency(self.latencyHome), FormatLatency(self.latencyWorld))
 end
 
 function ThorPerformance:UpdateData()	
@@ -106,22 +107,19 @@ function ThorPerformance:UpdateTooltip()
 
 	local isInitialized = self.tooltip:GetLineCount() ~= 0
 	if not isInitialized then
-		self.tooltip:SetColumnLayout(2, "LEFT", "RIGHT")
+		self.tooltip:SetColumnLayout(3, "LEFT", "RIGHT", "RIGHT")
 
-		self.tooltip:AddHeader(ADDON_NAME .. " " .. ADDON_VERSION)
-		
+		self.tooltip:AddHeader()
+        self.tooltip:SetCell(1, 1, ADDON_NAME .. " " .. ADDON_VERSION, nil, nil, 3)
+
 		self.tooltip:AddSeparator()
 
-		for i = 1, 5 do
-			self.tooltip:AddLine()
-		end
-
-		self.tooltip:SetCell(3, 1, FormatColor(COLOR_GOLD, "Framerate"))
-		self.tooltip:SetCell(4, 1, FormatColor(COLOR_GOLD, "Latency Home"))
-		self.tooltip:SetCell(5, 1, FormatColor(COLOR_GOLD, "Latency World"))
-		self.tooltip:SetCell(6, 1, FormatColor(COLOR_GOLD, "Bandwith download"))
-		self.tooltip:SetCell(7, 1, FormatColor(COLOR_GOLD, "Bandwith upload"))
-	end
+        self.tooltip:AddLine(FormatColor(COLOR_GOLD, "Framerate"), nil, FormatColor(COLOR_GOLD, "fps"))
+        self.tooltip:AddLine(FormatColor(COLOR_GOLD, "Latency Home"), nil, FormatColor(COLOR_GOLD, "ms"))
+        self.tooltip:AddLine(FormatColor(COLOR_GOLD, "Latency World"), nil, FormatColor(COLOR_GOLD, "ms"))
+        self.tooltip:AddLine(FormatColor(COLOR_GOLD, "Bandwidth download"), nil, FormatColor(COLOR_GOLD, "kBps"))
+        self.tooltip:AddLine(FormatColor(COLOR_GOLD, "Bandwidth upload"), nil, FormatColor(COLOR_GOLD, "kBps"))
+    end
 
 	self.tooltip:SetCell(3, 2, FormatFramerate(self.framerate))
 	self.tooltip:SetCell(4, 2, FormatLatency(self.latencyHome))
